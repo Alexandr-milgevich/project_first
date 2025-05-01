@@ -1,10 +1,12 @@
-package com.homework;
+package com.homework.model.entity;
+
+import com.homework.model.enums.TransactionType;
+import com.homework.utils.validators.ValidateBalance;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
-// Класс, представляющий банковский счет
 public class BankAccount {
 
     private final String accountNumber;             //уникальный номер счета.
@@ -12,7 +14,7 @@ public class BankAccount {
     private final User owner;                       //владелец счета.
     private final List<Transaction> transactions;   //история транзакций.
 
-    Validate validate = new Validate();
+    ValidateBalance validateBalance = new ValidateBalance();
 
     public BankAccount(String accountNumber, User owner) {
         this.accountNumber = accountNumber;
@@ -29,10 +31,6 @@ public class BankAccount {
         return balance;
     }
 
-    public User getOwner() {
-        return owner;
-    }
-
     public List<Transaction> getTransactions() {
         return new ArrayList<>(transactions); // Возвращаем копию для защиты от изменений
     }
@@ -43,9 +41,9 @@ public class BankAccount {
      * @param amount сумма транзакции
      */
     public void deposit(BigDecimal amount) {
-        validate.checkAmountOnPositiveSum(amount);
+        validateBalance.checkAmountOnPositiveSum(amount);
         balance = balance.add(amount);
-        Transaction transaction = new Transaction(amount, "DEPOSIT", this, null);
+        Transaction transaction = new Transaction(amount, TransactionType.DEPOSIT, this, null);
         addTransaction(transaction);
     }
 
@@ -55,9 +53,9 @@ public class BankAccount {
      * @param amount сумма транзакции
      */
     public void withdraw(BigDecimal amount) {
-        validate.checkBalanceCompareToAmountAndOnPositiveSum(balance, amount);
+        validateBalance.checkBalanceCompareToAmountAndOnPositiveSum(balance, amount);
         balance = balance.subtract(amount);
-        Transaction transaction = new Transaction(amount, "WITHDRAW", this, null);
+        Transaction transaction = new Transaction(amount, TransactionType.WITHDRAWAL, this, null);
         addTransaction(transaction);
     }
 

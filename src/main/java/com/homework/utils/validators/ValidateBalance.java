@@ -1,9 +1,10 @@
-package com.homework;
+package com.homework.utils.validators;
+
+import com.homework.exception.BalanceException;
 
 import java.math.BigDecimal;
 
-//Вынесенная валидация
-public class Validate {
+public class ValidateBalance {
     /**
      * Метод для проверки средств на отрицательную приходящую сумму
      *
@@ -11,7 +12,7 @@ public class Validate {
      */
     public void checkAmountOnPositiveSum(BigDecimal amount) {
         if (amount.compareTo(BigDecimal.ZERO) <= 0) {
-            throw new RuntimeException("Сумма должна быть положительной");
+            throw new BalanceException("Сумма должна быть положительной");
         }
     }
 
@@ -22,7 +23,7 @@ public class Validate {
      */
     public void checkBalanceCompareToAmount(BigDecimal balance, BigDecimal amount) {
         if (balance.compareTo(amount) < 0) {
-            throw new RuntimeException("Недостаточно средств на счете");
+            throw new BalanceException("Недостаточно средств на счете");
         }
     }
 

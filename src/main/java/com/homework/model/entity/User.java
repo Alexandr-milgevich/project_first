@@ -1,9 +1,8 @@
-package com.homework;
+package com.homework.model.entity;
 
 import java.util.ArrayList;
 import java.util.List;
 
-// Класс, представляющий пользователя банка
 public class User {
     private final String id;                    //уникальный идентификатор пользователя.
     private final String name;                  //имя пользователя.
@@ -13,14 +12,6 @@ public class User {
         this.id = id;
         this.name = name;
         this.accounts = new ArrayList<>();
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public String getName() {
-        return name;
     }
 
     /**
@@ -34,10 +25,11 @@ public class User {
 
     /**
      * Метод возвращает список счетов пользователя.
+     * Возвращаем копию для защиты от изменений
      *
      * @return список счетов пользователя
      */
     public List<BankAccount> getAccounts() {
-        return new ArrayList<>(accounts); // Возвращаем копию для защиты от изменений
+        return new ArrayList<>(accounts); //
     }
 }

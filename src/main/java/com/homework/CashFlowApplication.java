@@ -1,9 +1,13 @@
 package com.homework;
 
+import com.homework.model.entity.BankAccount;
+import com.homework.service.BankService;
+import com.homework.model.entity.User;
+
 import java.math.BigDecimal;
 import java.util.List;
 
-public class App {
+public class CashFlowApplication {
     public static void main(String[] args) {
         System.out.println("Hello World");
 
@@ -35,5 +39,8 @@ public class App {
         // Выводим историю транзакций
         System.out.println("Transaction history for ACC123:");
         bankService.getTransactionHistory(acc1).forEach(System.out::println);
+
+        // Выводим общий баланс всех счетов пользователя.
+        System.out.println("Total balance: " + bankService.getTotalBalance(user));
     }
 }

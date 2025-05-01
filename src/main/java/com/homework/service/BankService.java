@@ -1,11 +1,16 @@
-package com.homework;
+package com.homework.service;
+
+import com.homework.model.entity.BankAccount;
+import com.homework.model.entity.Transaction;
+import com.homework.model.entity.User;
+import com.homework.model.enums.TransactionType;
+import com.homework.utils.validators.ValidateBalance;
 
 import java.math.BigDecimal;
 import java.util.List;
 
-//сервисный класс, который управляет операциями с банковскими счетами.
 public class BankService {
-    Validate validate = new Validate();
+    ValidateBalance validateBalance = new ValidateBalance();
 
     /**
      * Метод создает новый счет для пользователя.
@@ -28,10 +33,10 @@ public class BankService {
      * @param amount        сумма транзакции
      */
     public void transfer(BankAccount sourceAccount, BankAccount targetAccount, BigDecimal amount) {
-        validate.checkBalanceCompareToAmountAndOnPositiveSum(sourceAccount.getBalance(), amount);
+        validateBalance.checkBalanceCompareToAmountAndOnPositiveSum(sourceAccount.getBalance(), amount);
         sourceAccount.withdraw(amount);
         targetAccount.deposit(amount);
-        Transaction transaction = new Transaction(amount, "TRANSFER", sourceAccount, targetAccount);
+        Transaction transaction = new Transaction(amount, TransactionType.TRANSFER, sourceAccount, targetAccount);
         sourceAccount.addTransaction(transaction);
         targetAccount.addTransaction(transaction);
     }
