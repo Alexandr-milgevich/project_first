@@ -2,11 +2,13 @@ package com.homework.model.entity;
 
 import com.homework.model.enums.TransactionType;
 import com.homework.utils.validators.ValidateBalance;
+import lombok.Getter;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
+@Getter
 public class BankAccount {
 
     private final String accountNumber;             //уникальный номер счета.
@@ -23,16 +25,8 @@ public class BankAccount {
         this.transactions = new ArrayList<>();
     }
 
-    public String getAccountNumber() {
-        return accountNumber;
-    }
-
-    public BigDecimal getBalance() {
-        return balance;
-    }
-
     public List<Transaction> getTransactions() {
-        return new ArrayList<>(transactions); // Возвращаем копию для защиты от изменений
+        return List.copyOf(transactions); // Возвращаем копию для защиты от изменений
     }
 
     /**
@@ -43,7 +37,7 @@ public class BankAccount {
     public void deposit(BigDecimal amount) {
         validateBalance.checkAmountOnPositiveSum(amount);
         balance = balance.add(amount);
-        Transaction transaction = new Transaction(amount, TransactionType.DEPOSIT, this, null);
+        Transaction transaction = new Transaction(amount, TransactionType.DEPOSIT, null, this);
         addTransaction(transaction);
     }
 
